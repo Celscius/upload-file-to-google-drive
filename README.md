@@ -1,4 +1,4 @@
-# uploading file to googledrive using html, googlesppcript and googlesheet
+# uploading file to googledrive using html, googles appcript and googlesheet
 
 simple sample script for uploading a file using the file input tag of HTML to google drive and save the record on googlesheet.
 
