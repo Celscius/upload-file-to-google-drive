@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+      body {
+        background-color: #eee;
+      }
+
+      *[role="form"] {
+        max-width: 530px;
+        padding: 15px;
+        margin: 0 auto;
+        background-color: #fff;
+        border-radius: 0.3em;
+      }
+
+      *[role="form"] h2 {
+        margin-left: 5em;
+        margin-bottom: 1em;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    
+    
+    <!------ Include the above in your HEAD tag ---------->
+    <div class="container">
+      <form class="form-horizontal" role="form">
+        <div class="form-group">
+          <label for="firstName" class="col-sm-3 control-label">File Name</label>
+          <div class="col-sm-9">
+            <input type="text" name="name" id="name" placeholder="File name" class="form-control" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email" class="col-sm-3 control-label">Description</label>
+          <div class="col-sm-9">
+            <textarea id="textarea" name="textarea" class="form-control" rows="4" cols="50" placeholder="Insert description here"></textarea>
+          </div>
+        </div>
+         <div class="form-group">
+          <label for="file" class="col-sm-3 control-label">File</label>
+          <div class="col-sm-9">
+            <input id="file" type="file" onchange="getFile(this)" />
+          </div>
+        </div>
+        <!-- /.form-group -->
+        <div class="form-group">
+          <div class="col-sm-9 col-sm-offset-3">
+            <button id="submit" name="submit" type="submit" class="btn btn-primary btn-block" >Register</button>
+          </div>
+        </div>
+        <!-- loader
+        <p style="display:inline">it will take 5 to 10 second . . . . .<p>
+        <p style="display:inline"><img src="https://i.stack.imgur.com/AuqJU.gif"></p>
+        -->
+      </form>
+      <!-- /form -->
+    </div>
+    <!-- ./container -->
+<script>
+   function getFile(f) {
+     const file = document.getElementById("file").files[0]
+     const name = document.getElementById("name")
+     const description = document.getElementById("textarea")
+
+     const fr = new FileReader();
+     fr.onload = function(e) {
+         const bytes = [...new Int8Array(e.target.result)]
+         document.querySelector("form").addEventListener("submit", (e) => {
+         const obj = {
+             name: name.value,
+             description: description.value,
+             filename: file.name,
+             mimeType: file.type,
+             bytes: bytes
+         };
+         google.script.run
+              .withFailureHandler(e => console.log("success"))
+              .withSuccessHandler(e => console.log(e))
+              .saveFile(obj);
+         });
+     };
+     console.log(file)
+    fr.readAsArrayBuffer(file);
+ }
+</script>
+  </body>
+</html>
